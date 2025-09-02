@@ -12,8 +12,24 @@
 				{
 					"name": "index",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{URL_BASE}}/causal",
 							"host": [
@@ -674,6 +690,58 @@
 							"path": [
 								"order",
 								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add_activity",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_BASE}}/order/add_activity/1/1",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"order",
+								"add_activity",
+								"1",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"rosemary.stracke@example.com\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}/auth/login",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"auth",
+								"login"
 							]
 						}
 					},
