@@ -2,31 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Causal;
+use App\Models\Technician;
 use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 
-class CausalController extends Controller
+class TechnicianController extends Controller
 {
 
     private $rules = [
-        'description' => 'required|string|min:3|max:100'
+        'name' => 'required|string|min:3|max:80',
+        'speciality' => 'max:50',
+        'phone' => 'max:30'
     ];
 
     private $traductionAttributes = [
-        'description' => 'descripción'
+        'document' => 'documento',
+        'name' => 'nombre',
+        'speciality' => 'especialidad',
+        'phone' => 'teléfono'
     ];
 
-   
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $causals = Causal::all();
-        return response()->json($causals, Response::HTTP_OK);
+        $technicians = Technician::all();
+        return response()->json($technicians, Response::HTTP_OK);
     }
 
     /**
@@ -39,10 +43,10 @@ class CausalController extends Controller
             return $data;
         }
 
-        $causal = Causal::create($request->all());
+        $technician = Technician::create($request->all());
         $response = [
-            'message' => 'Registro creado exitosamente',
-            'causal' => $causal
+            'message' => 'Tecnico creado exitosamente',
+            'technician' => $technician
         ];
 
         return response()->json($response, Response::HTTP_CREATED);
@@ -51,25 +55,25 @@ class CausalController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Causal $causal)
+    public function show(Technician $technician)
     {
-        return response()->json($causal, Response::HTTP_OK);
+         return response()->json($technician, Response::HTTP_OK);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Causal $causal)
+    public function update(Request $request, Technician $technician)
     {
         $data = $this->applyValidator($request, $this->rules, $this->traductionAttributes);
         if (!empty($data)) {
             return $data;
         }
 
-        $causal->update($request->all());
+        $technician->update($request->all());
         $response = [
-            'message' => 'Registro actualizado exitosamente',
-            'causal' => $causal
+            'message' => 'Tecnico actualizado exitosamente',
+            'technician' => $technician
         ];
 
         return response()->json($response, Response::HTTP_OK);
@@ -78,12 +82,12 @@ class CausalController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Causal $causal)
+    public function destroy(Technician $technician)
     {
-        $causal->delete();
+        $technician->delete();
         $response = [
-            'message' => 'Registro eliminado exitosamente',
-            'causal' => $causal
+            'message' => 'Tecnico eliminado exitosamente',
+            'technician' => $technician
         ];
 
         return response()->json($response, Response::HTTP_OK);

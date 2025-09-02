@@ -2,31 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Causal;
+use App\Models\Observation;
 use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 
-class CausalController extends Controller
+class ObservationController extends Controller
 {
 
     private $rules = [
         'description' => 'required|string|min:3|max:100'
     ];
 
-    private $traductionAttributes = [
+    private $traduccionAttributes = [
         'description' => 'descripción'
     ];
-
-   
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $causals = Causal::all();
-        return response()->json($causals, Response::HTTP_OK);
+        $observations = Observation::all();
+        return response()->json($observations, Response::HTTP_OK);
     }
 
     /**
@@ -34,15 +32,15 @@ class CausalController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $this->applyValidator($request, $this->rules, $this->traductionAttributes);
+        $data = $this->applyValidator($request, $this->rules, $this->traduccionAttributes);
         if (!empty($data)) {
             return $data;
         }
 
-        $causal = Causal::create($request->all());
+        $observation = Observation::create($request->all());
         $response = [
-            'message' => 'Registro creado exitosamente',
-            'causal' => $causal
+            'message' => 'Observacion creada exitosamente',
+            'observation' => $observation
         ];
 
         return response()->json($response, Response::HTTP_CREATED);
@@ -51,25 +49,25 @@ class CausalController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Causal $causal)
+    public function show(Observation $observation)
     {
-        return response()->json($causal, Response::HTTP_OK);
+        return response()->json($observation, Response::HTTP_OK);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Causal $causal)
+    public function update(Request $request, Observation $observation)
     {
-        $data = $this->applyValidator($request, $this->rules, $this->traductionAttributes);
+        $data = $this->applyValidator($request, $this->rules, $this->traduccionAttributes);
         if (!empty($data)) {
             return $data;
         }
 
-        $causal->update($request->all());
+        $observation->update($request->all());
         $response = [
-            'message' => 'Registro actualizado exitosamente',
-            'causal' => $causal
+            'message' => 'Observacion actualizada exitosamente',
+            'observation' => $observation
         ];
 
         return response()->json($response, Response::HTTP_OK);
@@ -78,12 +76,12 @@ class CausalController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Causal $causal)
+    public function destroy(Observation $observation)
     {
-        $causal->delete();
+        $observation->delete();
         $response = [
-            'message' => 'Registro eliminado exitosamente',
-            'causal' => $causal
+            'message' => 'Observacion eliminada exitosamente',
+            'observation' => $observation
         ];
 
         return response()->json($response, Response::HTTP_OK);
